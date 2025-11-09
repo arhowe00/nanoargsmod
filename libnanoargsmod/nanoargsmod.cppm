@@ -41,17 +41,16 @@ public:
 
             // Long-form option: --name or --name=value
             if (arg.starts_with("--")) {
-                auto name_part = arg.substr(2);
-                auto eq_pos = name_part.find('=');
+                auto eq_pos = arg.find('=');
 
                 if (eq_pos != std::string_view::npos) {
                     // --name=value format
-                    auto name = std::string{name_part.substr(0, eq_pos)};
-                    auto value = std::string{name_part.substr(eq_pos + 1)};
+                    auto name = std::string{arg.substr(0, eq_pos)};
+                    auto value = std::string{arg.substr(eq_pos + 1)};
                     options_[std::move(name)] = std::move(value);
                 } else {
                     // --name format (might have following value)
-                    auto name = std::string{name_part};
+                    auto name = std::string{arg};
                     if (i + 1 < argc && argv[i + 1][0] != '-') {
                         options_[std::move(name)] = argv[++i];
                     } else {
@@ -61,9 +60,9 @@ public:
                 continue;
             }
 
-            // Short-form option: -n
+            // Short-form option: -n (single dash, can be word or single char)
             if (arg.starts_with("-") && arg.size() > 1) {
-                auto name = std::string{arg.substr(1)};
+                auto name = std::string{arg};
                 if (i + 1 < argc && argv[i + 1][0] != '-') {
                     options_[std::move(name)] = argv[++i];
                 } else {
