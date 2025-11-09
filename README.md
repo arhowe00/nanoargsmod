@@ -11,12 +11,16 @@ flags through that object.
 
 ```cpp
 nanoargsmod::CmdLineTool clt(argc, argv);     // from main
-auto name = clt.get<std::string>("--name");   // returns std::optional<std::string>
+auto name = clt.get<std::string>("--flag1");  // returns std::optional<std::string>
 bool verbose = clt.flag("--verbose");         // returns true if --verbose was present
-auto missing = clt.get<int>("-m");            // this will be std::nullopt. Your app must decide to tell the user and crash
+auto missing = clt.get<int>("-m");            // this will be std::nullopt
 
 // ... use the options in your code ...
 ```
+
+In the example above, `missing` will be `std::nullopt` if an `-m <#>` option
+wasn't provided. It is up to your app's logic to inform the user of this
+shortcoming and crash.
 
 ## Using in Your Project
 
@@ -25,7 +29,7 @@ One easy way is to use git submodules with cmake. Assuming your modules are in
 
 ```bash
 git submodule add https://github.com/arhowe00/nanoargsmod.git extenrnal/nanoargsmod
-git submodule init --update --recursive
+git submodule update --init --recursive
 ```
 
 Add to your `CMakeLists.txt`:
