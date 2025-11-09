@@ -1,0 +1,43 @@
+{
+  "version": 3,
+  "configurePresets": [
+    {
+      "name": "deb",
+      "displayName": "Debug",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build-debug",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug"
+      }
+    },
+    {
+      "name": "rel",
+      "displayName": "Release",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build-release",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "deb",
+      "configurePreset": "deb"
+    },
+    {
+      "name": "rel",
+      "configurePreset": "rel"
+    }
+  ],
+  "testPresets": [
+    {
+      "name": "deb",
+      "configurePreset": "deb"
+    },
+    {
+      "name": "rel",
+      "configurePreset": "rel"
+    }
+  ]
+}
