@@ -47,7 +47,7 @@ Supports: `-f value`, `--flag value`, `--flag=value`, positional args, `--` sepa
 ## Building
 
 ```bash
+git submodule update --init --recursive
 cmake --preset deb
 cmake --build build-debug
-ctest --preset deb
 ```

@@ -1,4 +1,5 @@
 #include <catch2/catch_test_macros.hpp>
+
 import nanoargsmod;
 
 TEST_CASE("Args parses long flags with values") {
@@ -117,7 +118,7 @@ TEST_CASE("Args get_double throws on invalid double") {
     REQUIRE_THROWS_AS(args.get_double("threshold"), std::runtime_error);
 }
 
-TEST_CASE("Args stores program name") {
+TEST_CASE("Args stores program nanoargsmode") {
     const char* argv[] = {"myprogram", "--input", "file.txt"};
     nanoargsmod::Args args(3, const_cast<char**>(argv));
 

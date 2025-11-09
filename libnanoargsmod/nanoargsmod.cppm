@@ -1,9 +1,11 @@
-export module nanoargsmod;
+module;
 
-import <map>;
-import <stdexcept>;
-import <string>;
-import <vector>;
+#include <map>
+#include <stdexcept>
+#include <string>
+#include <vector>
+
+export module nanoargsmod;
 
 export namespace nanoargsmod {
 
