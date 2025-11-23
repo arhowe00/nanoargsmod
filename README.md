@@ -24,19 +24,21 @@ shortcoming and crash.
 
 ## Using in Your Project
 
-One easy way is to use git submodules with cmake. Assuming your modules are in
-`external/`:
-
-```bash
-git submodule add https://github.com/arhowe00/nanoargsmod.git extenrnal/nanoargsmod
-git submodule update --init --recursive
-```
+Use CMake's FetchContent to automatically download and build nanoargsmod.
 
 Add to your `CMakeLists.txt`:
 
 ```cmake
-add_subdirectory(external/nanoargsmod/libnanoargsmod)
-target_link_libraries(your_app PRIVATE nanoargsmod)
+include(FetchContent)
+FetchContent_Declare(
+  nanoargsmod
+  GIT_REPOSITORY https://github.com/arhowe00/nanoargsmod.git
+  GIT_TAG        master  # or specify a commit/tag
+)
+FetchContent_MakeAvailable(nanoargsmod)
+
+add_executable(your_app main.cpp)
+target_link_libraries(your_app PRIVATE nanoargsmod::nanoargsmod)
 ```
 
 In your C++ file with main(), `import nanoargsmod;` should work at the top.
