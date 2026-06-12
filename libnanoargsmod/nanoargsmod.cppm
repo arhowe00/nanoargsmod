@@ -77,10 +77,14 @@ public:
     }
 
     /// Returns parsed value of type T for named option, or nullopt if absent.
+    /// Pass the name exactly as it appears on the command line, including leading dashes (e.g.,
+    /// "--flag" or "-n", not "flag" or "n").
     template <typename T>
     [[nodiscard]] std::optional<T> get(std::string_view name) const;
 
     /// Returns true if named option or flag was present.
+    /// Pass the name exactly as it appears on the command line, including leading dashes (e.g.,
+    /// "--verbose", not "verbose").
     [[nodiscard]] bool flag(std::string_view name) const noexcept {
         return options_.find(std::string{name}) != options_.end();
     }
