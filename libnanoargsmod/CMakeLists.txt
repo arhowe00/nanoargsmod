@@ -1,5 +1,5 @@
 add_library(nanoargsmod)
-add_library(nanoargsmod::nanoargsmod ALIAS nanoargsmod)
+add_library(nanoargsmod ALIAS nanoargsmod)
 
 target_sources(nanoargsmod PUBLIC FILE_SET CXX_MODULES FILES nanoargsmod.cppm)
 
