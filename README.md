@@ -38,7 +38,7 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(nanoargsmod)
 
 add_executable(your_app main.cpp)
-target_link_libraries(your_app PRIVATE nanoargsmod::nanoargsmod)
+target_link_libraries(your_app PRIVATE nanoargsmod)
 ```
 
 In your C++ file with main(), `import nanoargsmod;` should work at the top.
