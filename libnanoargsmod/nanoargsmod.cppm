@@ -7,6 +7,7 @@ module;
 #include <string>
 #include <string_view>
 #include <unordered_map>
+#include <unordered_set>
 #include <vector>
 
 export module nanoargsmod;
@@ -96,6 +97,17 @@ public:
 
     /// Returns view of program name (argv[0]).
     [[nodiscard]] std::string_view program_name() const noexcept { return program_name_; }
+
+    /// Returns the first parsed option that is not in the allow-list, or nullopt if all parsed
+    /// options are allowed. Names must match the on-command-line spelling exactly (with dashes).
+    template <typename... Names>
+    [[nodiscard]] std::optional<std::string> whitelist(Names&&... allowed) const {
+        const std::unordered_set<std::string_view> allowed_set{std::string_view{allowed}...};
+        for (const auto& [k, _] : options_)
+            if (!allowed_set.contains(k))
+                return k;
+        return std::nullopt;
+    }
 
 private:
     std::string_view program_name_;

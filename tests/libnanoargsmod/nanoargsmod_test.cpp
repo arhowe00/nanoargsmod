@@ -54,3 +54,19 @@ TEST_CASE("CmdLineTool handles zero argc") {
     REQUIRE(cmd.positional().empty());
     REQUIRE_FALSE(cmd.flag("anything"));
 }
+
+TEST_CASE("CmdLineTool whitelist accepts allowed options and reports unknown ones") {
+    const char* argv[] = {"prog", "--output=out.txt", "-n", "5", "--nokakce", "pos.txt"};
+    nanoargsmod::CmdLineTool cmd(6, const_cast<char**>(argv));
+
+    REQUIRE(cmd.whitelist("--output", "-n").value() == "--nokakce");
+    REQUIRE_FALSE(cmd.whitelist("--output", "-n", "--nokakce").has_value());
+}
+
+TEST_CASE("CmdLineTool whitelist matches the on-command-line spelling with dashes") {
+    const char* argv[] = {"prog", "--verbose"};
+    nanoargsmod::CmdLineTool cmd(2, const_cast<char**>(argv));
+
+    REQUIRE(cmd.whitelist("verbose").value() == "--verbose");
+    REQUIRE_FALSE(cmd.whitelist("--verbose").has_value());
+}
