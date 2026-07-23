@@ -1,6 +1,7 @@
 module;
 
 #include <charconv>
+#include <cstdlib>
 #include <optional>
 #include <span>
 #include <stdexcept>
@@ -154,11 +155,11 @@ template <>
         return std::nullopt;
     }
 
-    double value{};
-    auto [ptr, ec] =
-        std::from_chars(it->second.data(), it->second.data() + it->second.size(), value);
+    const char* const first = it->second.c_str();
+    char* end{};
+    const double value = std::strtod(first, &end);
 
-    if (ec != std::errc{} || ptr != it->second.data() + it->second.size()) {
+    if (end != first + it->second.size()) {
         throw std::runtime_error("Option '" + std::string{name} + "' with value '" + it->second +
                                  "' cannot be parsed as double");
     }
